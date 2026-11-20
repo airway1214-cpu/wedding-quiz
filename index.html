@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>婚禮賓客動物圖鑑｜測測看你是哪種喜宴小動物？</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg-paper: #FAF7F2;
+      --card-bg: #FFFFFF;
+      --border-soft: #E6DFD3;
+      --text-main: #4A4238;
+      --text-sub: #7D7366;
+      --sage-green: #7A9A82;
+      --sage-light: #EEF3EF;
+      --apricot: #E89B72;
+      --apricot-light: #FDF3ED;
+      --cream-yellow: #F4D58D;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      min-height: 100vh;
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(#E3DCD0 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(74, 66, 56, 0.06);
+      padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 日系紙膠帶裝飾 */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 110px;
+      height: 24px;
+      background: rgba(122, 154, 130, 0.28);
+      border-left: 2px dashed rgba(255,255,255,0.6);
+      border-right: 2px dashed rgba(255,255,255,0.6);
+    }
+
+    .screen {
+      display: none;
+      animation: fadeIn 0.45s ease forwards;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 首頁樣式 */
+    .badge-tag {
+      display: inline-block;
+      background: var(--sage-light);
+      color: var(--sage-green);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 99px;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    h1.main-title {
+      font-size: 24px;
+      line-height: 1.4;
+      margin: 0 0 12px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-sub);
+      margin: 0 0 22px;
+    }
+
+    .hero-illustration {
+      background: #FCF9F4;
+      border: 1.5px dashed var(--border-soft);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .nickname-input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text-main);
+      background: #FFFDF9;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .nickname-input:focus {
+      border-color: var(--sage-green);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 16px;
+      background: var(--sage-green);
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(122, 154, 130, 0.3);
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 13px;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 14px;
+      background: #FFFFFF;
+      color: var(--text-sub);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* 測驗進度條 */
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sage-green);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #EFECE6;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--sage-green);
+      border-radius: 99px;
+      width: 12.5%;
+      transition: width 0.35s ease;
+    }
+
+    .question-tag {
+      font-size: 12px;
+      color: var(--apricot);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      line-height: 1.5;
+      font-weight: 700;
+      margin: 0 0 20px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      background: #FFFDF9;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 15px;
+      font-family: inherit;
+      font-size: 14.5px;
+      line-height: 1.45;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      transition: all 0.18s ease;
+    }
+
+    .option-btn:hover {
+      border-color: var(--sage-green);
+      background: var(--sage-light);
+    }
+
+    .option-btn:active {
+      transform: scale(0.985);
+    }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #EFECE6;
+      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .option-btn:hover .option-letter {
+      background: var(--sage-green);
+      color: #FFFFFF;
+    }
+
+    /* Loading 畫面 */
+    .loading-box {
+      padding: 50px 10px;
+      text-align: center;
+    }
+
+    .spinner-leaf {
+      font-size: 42px;
+      display: inline-block;
+      animation: bounce 1s infinite alternate ease-in-out;
+      margin-bottom: 14px;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0) rotate(-6deg); }
+      to { transform: translateY(-10px) rotate(6deg); }
+    }
+
+    /* 結果圖卡區域（供 html2canvas 截圖） */
+    .result-capture-area {
+      background: #FAF7F2;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 20px;
+      padding: 22px 18px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .result-for {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 14px;
+    }
+
+    .animal-svg-box {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 14px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(74, 66, 56, 0.05);
+    }
+
+    .hashtags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .hashtag {
+      background: #FFFFFF;
+      border: 1px solid var(--border-soft);
+      color: var(--sage-green);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .result-desc {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-main);
+      text-align: left;
+      border: 1px solid #EFECE6;
+      margin-bottom: 12px;
+    }
+
+    .partner-box {
+      background: var(--apricot-light);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .partner-label {
+      color: var(--apricot);
+      font-weight: 700;
+    }
+
+    .card-footer-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #A3988A;
+      letter-spacing: 0.04em;
+    }
+
+    .hint-text {
+      font-size: 12px;
+      color: var(--text-sub);
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="washi-tape"></div>
+
+  <!-- 1. 首頁 -->
+  <div id="screen-start" class="screen active" style="text-align: center;">
+    <span class="badge-tag">WEDDING GUEST QUIZ</span>
+    <h1 class="main-title">婚禮賓客動物圖鑑<br>你是哪種喜宴小動物？</h1>
+    <p class="subtitle">
+      進場先看背板還是點心？主持人喊玩遊戲會躲起來嗎？<br>
+      8 個婚禮小情境，測出你的隱藏賓客屬性！
+    </p>
+
+    <div class="hero-illustration">
+      <!-- 首頁組合插畫 SVG -->
+      <svg width="210" height="95" viewBox="0 0 210 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 裝飾小花與愛心 -->
+        <circle cx="35" cy="25" r="4" fill="#F4D58D"/>
+        <circle cx="175" cy="22" r="5" fill="#E89B72" fill-opacity="0.6"/>
+        <path d="M105 14C105 14 101 9 97 12C93 15 98 21 105 25C112 21 117 15 113 12C109 9 105 14 105 14Z" fill="#E89B72"/>
+        <!-- 左：小水豚剪影 -->
+        <ellipse cx="62" cy="64" rx="24" ry="18" fill="#D5B895" stroke="#4A4238" stroke-width="2"/>
+        <circle cx="48" cy="48" r="5" fill="#D5B895" stroke="#4A4238" stroke-width="2"/>
+        <circle cx="53" cy="60" r="2" fill="#4A4238"/>
+        <path d="M40 65H48" stroke="#4A4238" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="62" cy="44" r="6" fill="#F29F3D" stroke="#4A4238" stroke-width="1.8"/>
+        <path d="M62 38L64 35" stroke="#7A9A82" stroke-width="2" stroke-linecap="round"/>
+        <!-- 右：小貓頭鷹剪影 -->
+        <ellipse cx="148" cy="62" rx="20" ry="21" fill="#E6DFD3" stroke="#4A4238" stroke-width="2"/>
+        <circle cx="141" cy="57" r="6" fill="#FFFFFF" stroke="#4A4238" stroke-width="1.8"/>
+        <circle cx="155" cy="57" r="6" fill="#FFFFFF" stroke="#4A4238" stroke-width="1.8"/>
+        <circle cx="141" cy="57" r="2" fill="#4A4238"/>
+        <circle cx="155" cy="57" r="2" fill="#4A4238"/>
+        <path d="M146 62L148 66L150 62Z" fill="#E89B72" stroke="#4A4238" stroke-width="1.5"/>
+        <!-- 地面草線 -->
+        <path d="M22 84H188" stroke="#7A9A82" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4"/>
+      </svg>
+      <div style="font-size: 12px; color: #7D7366; margin-top: 4px;">水豚・狐獴・紅鶴・黃金獵犬・無尾熊・貓頭鷹</div>
+    </div>
+
+    <div class="input-group">
+      <label for="nickname">你的暱稱（會印在專屬鑑定書上喔！）</label>
+      <input type="text" id="nickname" class="nickname-input" placeholder="例如：愛吃甜點的小美、大學死黨阿哲" maxlength="16" />
+    </div>
+
+    <button class="btn-primary" onclick="startQuiz()">開始測驗（共 8 題）</button>
+  </div>
+
+  <!-- 2. 測驗頁 -->
+  <div id="screen-quiz" class="screen">
+    <div class="progress-header">
+      <span id="progress-label">第 1 / 8 題</span>
+      <span id="progress-percent">13%</span>
+    </div>
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+
+    <div id="question-tag" class="question-tag">Q1｜踏進會場的第一秒</div>
+    <h2 id="question-text" class="question-text">題目載入中...</h2>
+    <div id="options-list" class="options-list"></div>
+  </div>
+
+  <!-- 3. 計算過場 -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-box">
+      <div class="spinner-leaf">🌿</div>
+      <h3 style="margin: 0 0 8px; font-size: 18px;">正在翻閱婚禮動物圖鑑...</h3>
+      <p style="margin: 0; font-size: 13.5px; color: var(--text-sub);">分析你的喜宴雷達與賓客靈魂中</p>
+    </div>
+  </div>
+
+  <!-- 4. 結果頁 -->
+  <div id="screen-result" class="screen">
+    <div id="capture-area" class="result-capture-area">
+      <div id="result-for" class="result-for">給 賓客 的婚禮動物鑑定書</div>
+      <h2 id="result-title" class="result-title">美食鑑賞家・水豚</h2>
+      <div id="animal-svg-box" class="animal-svg-box"></div>
+      <div id="result-hashtags" class="hashtags"></div>
+      <div id="result-desc" class="result-desc"></div>
+      <div class="partner-box">
+        <span class="partner-label">婚禮最佳同桌拍檔</span>
+        <span id="result-partner" style="font-weight: 700;">感性暖心派・無尾熊</span>
+      </div>
+      <div class="card-footer-note">✦ 婚禮賓客動物圖鑑・快傳到群組找你的拍檔 ✦</div>
+    </div>
+
+    <button class="btn-primary" onclick="downloadResultCard()">儲存專屬結果圖卡（分享限動）</button>
+    <button class="btn-secondary" onclick="resetQuiz()">再測一次</button>
+    <p id="save-status" class="hint-text">你的測驗結果已悄悄傳送給新人參考囉 💌</p>
+  </div>
+</div>
+
+<script>
+  // ★ 請將你的 Google Apps Script 網頁應用程式網址貼在下方引號內 ★
+  const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0goGRg3h70_0amfTNDqLfy1Ox9Cn5NJ5vfau4hxTNEZyKTPi_QB_q21pB6mDFaXXd/exec";
+
+  // 8 道情境題庫與隱藏權重（照真實參加婚禮的時間軸排列）
+  const QUESTIONS = [
+    {
+      tag: "Q1｜踏進會場的第一秒",
+      text: "剛抵達婚禮會場，你的視線雷達最先鎖定哪裡？",
+      options: [
+        { label: "A", text: "迎賓小點心與茶飲區", weights: { FOOD: 2 } },
+        { label: "B", text: "花藝拍照背板與拍貼機", weights: { GIFT: 2 } },
+        { label: "C", text: "尋找熟悉的朋友準備開聊", weights: { SOCIAL: 2 } },
+        { label: "D", text: "趕快找到自己的座位安頓下來", weights: { CHILL: 2 } }
+      ]
+    },
+    {
+      tag: "Q2｜報到收禮台・喜餅大哉問",
+      text: "剛簽完到、準備領取新人準備的「喜餅」時，你心裡最在意或最期待哪一件事？",
+      options: [
+        { label: "A", text: "顏值超高、包裝超美的手工西式餅乾禮盒", weights: { GIFT: 2 } },
+        { label: "B", text: "料好實在的傳統中式大餅，帶回家跟家人一起分食", weights: { VIBE: 1, SOCIAL: 1 } },
+        { label: "C", text: "裡面的點心真的好吃最重要，份量不用多、精緻就好", weights: { FOOD: 1, CHILL: 1 } },
+        { label: "D", text: "不管哪一種，先確認男女方親友是不是人人都有餅拿！", weights: { GAME: 1, SOCIAL: 1 } }
+      ]
+    },
+    {
+      tag: "Q3｜餐桌上的神秘小盒",
+      text: "入座後發現桌上放著一份婚禮小物，你內心最期待裡面是什麼？",
+      options: [
+        { label: "A", text: "手工餅乾、果醬或特色茶包", weights: { FOOD: 1, GIFT: 1 } },
+        { label: "B", text: "高顏值香氛、護手霜等質感好物", weights: { GIFT: 2 } },
+        { label: "C", text: "刮刮卡或帶有遊戲線索的小道具", weights: { GAME: 2 } },
+        { label: "D", text: "其實兩手空空回家最輕鬆，有心意就好", weights: { CHILL: 2 } }
+      ]
+    },
+    {
+      tag: "Q4｜進場與祝福・婚禮儀式感",
+      text: "從入場簽到到新人登場，哪個瞬間最能打中你的心？",
+      options: [
+        { label: "A", text: "在祝福小卡寫下心意，或全場舉杯祝福的溫馨時刻", weights: { VIBE: 2 } },
+        { label: "B", text: "全場一起舉杯歡呼、氣氛瞬間熱起來的瞬間", weights: { GAME: 1, VIBE: 1 } },
+        { label: "C", text: "新娘禮服與整體場地燈光美到像電影", weights: { GIFT: 2 } },
+        { label: "D", text: "默默鼓掌祝福，心想「太好了準備要開動了！」", weights: { FOOD: 1, CHILL: 1 } }
+      ]
+    },
+    {
+      tag: "Q5｜上菜啦！你的筷子哲學",
+      text: "喜宴佳餚一道道端上桌，什麼情況會讓你覺得「今天來對了」？",
+      options: [
+        { label: "A", text: "食材頂級、份量十足，酒水飲料無限續杯", weights: { FOOD: 2 } },
+        { label: "B", text: "擺盤精緻好拍，每道菜端上來都像藝術品", weights: { FOOD: 1, GIFT: 1 } },
+        { label: "C", text: "菜色其次，同桌的人超好聊、笑聲不斷", weights: { SOCIAL: 2 } },
+        { label: "D", text: "不用被叫上台，可以安靜專心把每一道吃完", weights: { CHILL: 2 } }
+      ]
+    },
+    {
+      tag: "Q6｜主持人拿起麥克風",
+      text: "當主持人宣布「接下來是全場互動時間！」，你的真實反應是？",
+      options: [
+        { label: "A", text: "眼睛發亮！手機準備好搶答或衝上台拿獎品", weights: { GAME: 2 } },
+        { label: "B", text: "在座位上幫同桌朋友加油、負責拍影片笑", weights: { SOCIAL: 1, GAME: 1 } },
+        { label: "C", text: "希望是那種在座位上輕鬆玩的小遊戲就好", weights: { CHILL: 1, GAME: 1 } },
+        { label: "D", text: "拜託不要點到我，我只想當安靜的吃瓜群眾", weights: { CHILL: 2 } }
+      ]
+    },
+    {
+      tag: "Q7｜逐桌敬酒與宴會後半段",
+      text: "喜宴進行到後半段、新人開始逐桌敬酒時，你通常處於什麼狀態？",
+      options: [
+        { label: "A", text: "不管在原位深聊，或拿著飲料去別桌串門子敘舊都超開心", weights: { SOCIAL: 2 } },
+        { label: "B", text: "新人敬酒經過這桌時，立刻舉杯大喊祝福、拍張大合照", weights: { GAME: 1, VIBE: 1 } },
+        { label: "C", text: "緊盯轉盤上的壓軸大菜與最後甜湯，一口都不放過", weights: { FOOD: 2 } },
+        { label: "D", text: "已經在心裡盤算等一下送客要去背板區合照拿喜糖", weights: { GIFT: 1, CHILL: 1 } }
+      ]
+    },
+    {
+      tag: "Q8｜理想婚禮的最後一則限動",
+      text: "如果參加了一場你心目中的「夢幻理想婚禮」，散場回家路上，你最想發一則什麼樣的限動？",
+      options: [
+        { label: "A", text: "「今天菜超好吃、酒超讚，飽到天靈蓋！」", weights: { FOOD: 2 } },
+        { label: "B", text: "「互動環節超嗨超好笑，完全沒冷場！」", weights: { GAME: 2 } },
+        { label: "C", text: "「每個細節都超美，伴手禮也太有質感！」", weights: { GIFT: 2 } },
+        { label: "D", text: "「氣氛超溫馨舒服，跟大家聚在一起好幸福！」", weights: { VIBE: 1, SOCIAL: 1 } }
+      ]
+    }
+  ];
+
+  // 各維度的理論滿分上限（用來計算得分率，確保 6 種動物出場機率公平）
+  const MAX_POSSIBLE = {
+    FOOD: 9,
+    GAME: 7,
+    GIFT: 9,
+    SOCIAL: 8,
+    VIBE: 6,
+    CHILL: 8
+  };
+
+  // 6 種日系手繪感動物 SVG 與結果文案
+  const ANIMALS = {
+    FOOD: {
+      name: "美食鑑賞家・水豚",
+      hashtags: ["#情緒穩定的吃貨", "#酒水雷達", "#胃袋滿足就是幸福"],
+      desc: "對你來說，一場婚禮的靈魂就在餐桌上！只要有誠意滿滿的佳餚、順口的酒水與讓人眼睛一亮的甜點，你就能頂著頭上的小橘子，在座位上露出最幸福的微笑。",
+      partner: "感性暖心派・無尾熊",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="55" cy="64" rx="34" ry="26" fill="#D5B895" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="34" cy="43" r="7" fill="#D5B895" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="76" cy="43" r="7" fill="#D5B895" stroke="#4A4238" stroke-width="2.5"/>
+        <ellipse cx="55" cy="69" rx="14" ry="10" fill="#B89872" stroke="#4A4238" stroke-width="2"/>
+        <path d="M36 57H43" stroke="#4A4238" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M67 57H74" stroke="#4A4238" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M51 67L55 70L59 67" stroke="#4A4238" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="55" cy="34" r="9" fill="#F29F3D" stroke="#4A4238" stroke-width="2.2"/>
+        <path d="M55 25C55 25 59 20 63 22" stroke="#7A9A82" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>`
+    },
+    GAME: {
+      name: "派對發電機・狐獴",
+      hashtags: ["#搶答第一名", "#氣氛製造機", "#獎品獵人"],
+      desc: "好奇心滿點、反應速度全場第一！只要主持人一喊「準備搶答」，你的雷達立刻豎起。有你在的桌次絕對不會冷場，是婚禮上最受歡迎的歡樂擔當！",
+      partner: "社交小太陽・黃金獵犬",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M36 92C36 74 44 64 55 64C66 64 74 74 74 92" fill="#E6CFAF" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="55" cy="46" r="21" fill="#F3E2C7" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="34" cy="45" r="5" fill="#9E7B56" stroke="#4A4238" stroke-width="2"/>
+        <circle cx="76" cy="45" r="5" fill="#9E7B56" stroke="#4A4238" stroke-width="2"/>
+        <circle cx="47" cy="44" r="5.5" fill="#9E7B56"/>
+        <circle cx="63" cy="44" r="5.5" fill="#9E7B56"/>
+        <circle cx="47" cy="44" r="2.2" fill="#FFFFFF"/>
+        <circle cx="63" cy="44" r="2.2" fill="#FFFFFF"/>
+        <ellipse cx="55" cy="52" rx="4" ry="3" fill="#4A4238"/>
+        <path d="M50 57Q55 61 60 57" stroke="#4A4238" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    },
+    GIFT: {
+      name: "美學收藏家・紅鶴",
+      hashtags: ["#質感細節控", "#背板打卡王", "#小物鑑定師"],
+      desc: "對美感有著敏銳直覺的你，最欣賞新人藏在細節裡的巧思！從花藝背板、拍貼機到實用又高顏值的婚禮小物，都能讓你拍出洗版級的美照與限動。",
+      partner: "佛系觀察家・貓頭鷹",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M56 88V64C56 50 42 48 42 36C42 26 51 22 58 26" stroke="#F2A7A0" stroke-width="9" stroke-linecap="round"/>
+        <path d="M56 88V64C56 50 42 48 42 36C42 26 51 22 58 26" stroke="#4A4238" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="57" cy="27" r="9" fill="#F2A7A0" stroke="#4A4238" stroke-width="2.5"/>
+        <path d="M65 27C72 27 75 32 73 37C69 35 66 33 65 31Z" fill="#4A4238"/>
+        <circle cx="56" cy="26" r="2" fill="#4A4238"/>
+        <ellipse cx="56" cy="76" rx="18" ry="12" fill="#F7C2BC" stroke="#4A4238" stroke-width="2.5"/>
+      </svg>`
+    },
+    SOCIAL: {
+      name: "社交小太陽・黃金獵犬",
+      hashtags: ["#全場敘舊王", "#破冰高手", "#有人的地方就有我"],
+      desc: "對你而言，婚禮就是最棒的大型同學會！熱情友善的你走到哪都能開啟話題，不僅能跟老朋友開心敘舊，還能迅速和同桌新朋友打成一片。",
+      partner: "派對發電機・狐獴",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M31 44C23 48 22 65 29 70C34 73 38 64 38 55" fill="#DFAA62" stroke="#4A4238" stroke-width="2.5"/>
+        <path d="M79 44C87 48 88 65 81 70C76 73 72 64 72 55" fill="#DFAA62" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="55" cy="54" r="24" fill="#F2C883" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="46" cy="50" r="2.5" fill="#4A4238"/>
+        <circle cx="64" cy="50" r="2.5" fill="#4A4238"/>
+        <ellipse cx="55" cy="58" rx="5" ry="3.5" fill="#4A4238"/>
+        <path d="M47 64Q55 71 63 64" stroke="#4A4238" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M52 67C52 72 58 72 58 67" fill="#E89B72" stroke="#4A4238" stroke-width="1.8"/>
+      </svg>`
+    },
+    VIBE: {
+      name: "感性暖心派・無尾熊",
+      hashtags: ["#衛生紙預備軍", "#浪漫見證者", "#儀式感滿分"],
+      desc: "內心柔軟又重感情的你，最喜歡看新人致詞、舉杯祝福與溫馨互動的橋段。雖然嘴上說還好，但燈光一暗、音樂一下，眼眶總是第一個泛紅！",
+      partner: "美食鑑賞家・水豚",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="29" cy="46" r="13" fill="#B8BDC2" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="29" cy="46" r="6" fill="#E6E8EA"/>
+        <circle cx="81" cy="46" r="13" fill="#B8BDC2" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="81" cy="46" r="6" fill="#E6E8EA"/>
+        <circle cx="55" cy="58" r="24" fill="#C7CCD1" stroke="#4A4238" stroke-width="2.5"/>
+        <ellipse cx="55" cy="60" rx="6" ry="9" fill="#4A4238"/>
+        <circle cx="43" cy="54" r="2.5" fill="#4A4238"/>
+        <circle cx="67" cy="54" r="2.5" fill="#4A4238"/>
+        <circle cx="39" cy="61" r="4" fill="#E89B72" fill-opacity="0.5"/>
+        <circle cx="71" cy="61" r="4" fill="#E89B72" fill-opacity="0.5"/>
+      </svg>`
+    },
+    CHILL: {
+      name: "佛系觀察家・貓頭鷹",
+      hashtags: ["#拒絕尷尬上台", "#優雅吃瓜群眾", "#自在最重要"],
+      desc: "喜歡用最自在的步調享受聚會，不愛被點名上台、也不喜歡太吵鬧的強迫互動。只要動線舒適、步調輕鬆，你就能在一旁優雅微笑獻上最真摯的祝福。",
+      partner: "美學收藏家・紅鶴",
+      svg: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M35 34L43 40M75 34L67 40" stroke="#4A4238" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="55" cy="60" rx="25" ry="27" fill="#E6DFD3" stroke="#4A4238" stroke-width="2.5"/>
+        <circle cx="45" cy="52" r="8.5" fill="#FFFFFF" stroke="#4A4238" stroke-width="2.2"/>
+        <circle cx="65" cy="52" r="8.5" fill="#FFFFFF" stroke="#4A4238" stroke-width="2.2"/>
+        <circle cx="45" cy="52" r="3" fill="#4A4238"/>
+        <circle cx="65" cy="52" r="3" fill="#4A4238"/>
+        <path d="M52 59L55 64L58 59Z" fill="#E89B72" stroke="#4A4238" stroke-width="1.8"/>
+        <path d="M46 72Q50 75 54 72M56 72Q60 75 64 72" stroke="#9E9384" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    }
+  };
+
+  // 狀態變數
+  let currentQuestionIndex = 0;
+  let userNickname = "";
+  let scores = { FOOD: 0, GAME: 0, GIFT: 0, SOCIAL: 0, VIBE: 0, CHILL: 0 };
+  let userAnswers = [];
+
+  function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+  }
+
+  function startQuiz() {
+    userNickname = document.getElementById('nickname').value.trim() || "神秘賓客";
+    currentQuestionIndex = 0;
+    scores = { FOOD: 0, GAME: 0, GIFT: 0, SOCIAL: 0, VIBE: 0, CHILL: 0 };
+    userAnswers = [];
+    renderQuestion();
+    showScreen('screen-quiz');
+  }
+
+  function renderQuestion() {
+    const q = QUESTIONS[currentQuestionIndex];
+    const total = QUESTIONS.length;
+    const percent = Math.round(((currentQuestionIndex + 1) / total) * 100);
+
+    document.getElementById('progress-label').textContent = `第 ${currentQuestionIndex + 1} / ${total} 題`;
+    document.getElementById('progress-percent').textContent = `${percent}%`;
+    document.getElementById('progress-fill').style.width = `${percent}%`;
+    document.getElementById('question-tag').textContent = q.tag;
+    document.getElementById('question-text').textContent = q.text;
+
+    const optionsContainer = document.getElementById('options-list');
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerHTML = `<span class="option-letter">${opt.label}</span><span>${opt.text}</span>`;
+      btn.onclick = () => handleSelectOption(opt);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function handleSelectOption(option) {
+    // 累加維度分數
+    for (const [key, val] of Object.entries(option.weights)) {
+      scores[key] += val;
+    }
+    userAnswers.push(`Q${currentQuestionIndex + 1}:${option.label}(${option.text})`);
+
+    if (currentQuestionIndex < QUESTIONS.length - 1) {
+      currentQuestionIndex++;
+      renderQuestion();
+    } else {
+      finishQuiz();
+    }
+  }
+
+  function finishQuiz() {
+    showScreen('screen-loading');
+
+    // 計算各維度得分率，找出最高者（若同分則隨機抽一隻，避免順序偏誤）
+    let bestRatio = -1;
+    let candidates = [];
+
+    for (const [dim, val] of Object.entries(scores)) {
+      const ratio = val / MAX_POSSIBLE[dim];
+      if (ratio > bestRatio + 0.0001) {
+        bestRatio = ratio;
+        candidates = [dim];
+      } else if (Math.abs(ratio - bestRatio) <= 0.0001) {
+        candidates.push(dim);
+      }
+    }
+
+    const topDimension = candidates[Math.floor(Math.random() * candidates.length)];
+    const resultAnimal = ANIMALS[topDimension];
+
+    // 填入結果頁內容
+    document.getElementById('result-for').textContent = `給 ${userNickname} 的婚禮賓客鑑定書`;
+    document.getElementById('result-title').textContent = resultAnimal.name;
+    document.getElementById('animal-svg-box').innerHTML = resultAnimal.svg;
+    document.getElementById('result-desc').textContent = resultAnimal.desc;
+    document.getElementById('result-partner').textContent = resultAnimal.partner;
+
+    const tagsEl = document.getElementById('result-hashtags');
+    tagsEl.innerHTML = resultAnimal.hashtags.map(t => `<span class="hashtag">${t}</span>`).join('');
+
+    // 背景傳送資料至 Google Sheets
+    sendDataToGoogleSheets(resultAnimal.name);
+
+    setTimeout(() => {
+      showScreen('screen-result');
+    }, 1400);
+  }
+
+  function sendDataToGoogleSheets(animalName) {
+    if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      document.getElementById('save-status').textContent = "（預覽模式：尚未綁定試算表網址，目前僅供測試顯示）";
+      return;
+    }
+
+    const payload = {
+      nickname: userNickname,
+      animalName: animalName,
+      scores: scores,
+      answers: userAnswers
+    };
+
+    fetch(GAS_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(err => console.error("傳送失敗:", err));
+  }
+
+  function downloadResultCard() {
+    const captureEl = document.getElementById('capture-area');
+    html2canvas(captureEl, {
+      scale: 2,
+      backgroundColor: "#FAF7F2",
+      borderRadius: 20
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `婚禮賓客動物鑑定_${userNickname}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  }
+
+  function resetQuiz() {
+    showScreen('screen-start');
+  }
+</script>
+
+</body>
+</html>
