@@ -432,7 +432,7 @@
     </div>
 
     <div class="input-group">
-      <label for="nickname">你的暱稱（會印在專屬鑑定書上喔！）</label>
+      <label for="nickname">你的暱稱</label>
       <input type="text" id="nickname" class="nickname-input" placeholder="例如：愛吃甜點的小美、大學死黨阿哲" maxlength="16" />
     </div>
 
@@ -495,9 +495,9 @@
       text: "剛抵達婚禮會場，你的視線雷達最先鎖定哪裡？",
       options: [
         { label: "A", text: "迎賓小點心與茶飲區", weights: { FOOD: 2 } },
-        { label: "B", text: "花藝拍照背板與拍貼機", weights: { GIFT: 2 } },
+        { label: "B", text: "新人拍的許多漂亮婚紗照與相本區", weights: { GIFT: 1, VIBE: 1 } },
         { label: "C", text: "尋找熟悉的朋友準備開聊", weights: { SOCIAL: 2 } },
-        { label: "D", text: "趕快找到自己的座位安頓下來", weights: { CHILL: 2 } }
+        { label: "D", text: "開場前的各式小活動（像是拍貼機、互動體驗）", weights: { GAME: 1, GIFT: 1 } }
       ]
     },
     {
@@ -516,15 +516,15 @@
       options: [
         { label: "A", text: "手工餅乾、果醬或特色茶包", weights: { FOOD: 1, GIFT: 1 } },
         { label: "B", text: "高顏值香氛、護手霜等質感好物", weights: { GIFT: 2 } },
-        { label: "C", text: "刮刮卡或帶有遊戲線索的小道具", weights: { GAME: 2 } },
+        { label: "C", text: "帶有驚喜感的小遊戲道具或抽獎券", weights: { GAME: 2 } },
         { label: "D", text: "其實兩手空空回家最輕鬆，有心意就好", weights: { CHILL: 2 } }
       ]
     },
     {
       tag: "Q4｜進場與祝福・婚禮儀式感",
-      text: "從入場簽到到新人登場，哪個瞬間最能打中你的心？",
+      text: "新人進場與台上儀式進行時，哪個瞬間最能打中你的心？",
       options: [
-        { label: "A", text: "在祝福小卡寫下心意，或全場舉杯祝福的溫馨時刻", weights: { VIBE: 2 } },
+        { label: "A", text: "在祝福小卡寫下心意，或看新人致詞的溫馨時刻", weights: { VIBE: 2 } },
         { label: "B", text: "全場一起舉杯歡呼、氣氛瞬間熱起來的瞬間", weights: { GAME: 1, VIBE: 1 } },
         { label: "C", text: "新娘禮服與整體場地燈光美到像電影", weights: { GIFT: 2 } },
         { label: "D", text: "默默鼓掌祝福，心想「太好了準備要開動了！」", weights: { FOOD: 1, CHILL: 1 } }
@@ -536,7 +536,7 @@
       options: [
         { label: "A", text: "食材頂級、份量十足，酒水飲料無限續杯", weights: { FOOD: 2 } },
         { label: "B", text: "擺盤精緻好拍，每道菜端上來都像藝術品", weights: { FOOD: 1, GIFT: 1 } },
-        { label: "C", text: "菜色其次，同桌的人超好聊、笑聲不斷", weights: { SOCIAL: 2 } },
+        { label: "C", text: "菜色不是重點，我是來祝福新人的", weights: { VIBE: 2 } },
         { label: "D", text: "不用被叫上台，可以安靜專心把每一道吃完", weights: { CHILL: 2 } }
       ]
     },
@@ -575,11 +575,11 @@
   // 各維度的理論滿分上限（用來計算得分率，確保 6 種動物出場機率公平）
   const MAX_POSSIBLE = {
     FOOD: 9,
-    GAME: 7,
+    GAME: 8,
     GIFT: 9,
-    SOCIAL: 8,
-    VIBE: 6,
-    CHILL: 8
+    SOCIAL: 6,
+    VIBE: 9,
+    CHILL: 6
   };
 
   // 6 種日系手繪感動物 SVG 與結果文案
